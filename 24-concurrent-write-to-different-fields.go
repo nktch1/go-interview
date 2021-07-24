@@ -15,23 +15,23 @@ func f24() {
 	var (
 		oS = s{}
 		wg = &sync.WaitGroup{}
-		mu = &sync.Mutex{}
+		//mu = &sync.Mutex{}
 	)
 
-	wg.Add(4)
-	for i := 0; i < 4; i++ {
+	wg.Add(2)
+	for i := 0; i <2; i++ {
 		go func(o *s, idx int) {
 			defer wg.Done()
 
 			for j := 0; j < 100; j++ {
 
-				mu.Lock()
+				//mu.Lock()
 				if idx % 2 == 0 {
 					o.slice1 = append(o.slice1, j)
 				} else {
 					o.slice2 = append(o.slice2, j)
 				}
-				mu.Unlock()
+				//mu.Unlock()
 
 				time.Sleep(100 * time.Millisecond)
 			}
@@ -43,6 +43,3 @@ func f24() {
 	fmt.Println(oS.slice1)
 	fmt.Println(oS.slice2)
 }
-
-// запись в один и тот же объект, но в разные поля
-// всегда должна изолироваться
